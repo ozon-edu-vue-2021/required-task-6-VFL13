@@ -189,19 +189,20 @@ export default {
           this.firstRowHeight;
       });
     },
+    updateRows(options, paginator) {
+      this.$emit("update", options, paginator);
+    },
     updateOrdering(ordering) {
-      this.$emit(
-        "update",
+      this.updateRows(
         { ...this.options, order: ordering },
         { ...this.paginator, currentPage: 1 }
       );
     },
     updatePagination(pagination) {
-      this.$emit("update", this.options, pagination);
+      this.updateRows(this.options, pagination);
     },
     search(value) {
-      this.$emit(
-        "update",
+      this.updateRows(
         { ...this.options, search: value },
         { ...this.paginator, currentPage: 1 }
       );
@@ -209,8 +210,7 @@ export default {
     addFilter(filter) {
       const filters = [...this.options.filter];
       filters.push(filter);
-      this.$emit(
-        "update",
+      this.updateRows(
         { ...this.options, filter: filters },
         { ...this.paginator, currentPage: 1 }
       );
@@ -221,8 +221,7 @@ export default {
           (filterObj) => !isEqual(filterObj, filter)
         ),
       ];
-      this.$emit(
-        "update",
+      this.updateRows(
         { ...this.options, filter: filters },
         { ...this.paginator, currentPage: 1 }
       );
