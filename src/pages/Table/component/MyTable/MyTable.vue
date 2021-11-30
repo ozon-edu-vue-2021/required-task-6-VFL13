@@ -118,7 +118,9 @@ export default {
   },
   computed: {
     renderRows() {
-      return this.rows.slice(this.startIndex, this.startIndex + this.step);
+      return this.virtualScroll
+        ? this.rows.slice(this.startIndex, this.startIndex + this.step)
+        : this.rows;
     },
     tableHeight() {
       return this.elementHeight * this.rows.length;
@@ -238,7 +240,7 @@ export default {
 }
 .virtual-scroll {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   gap: 15px;
 }
